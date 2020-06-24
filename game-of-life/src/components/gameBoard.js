@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 class Board extends Component {
-  state = {};
+  state = {
+    // gameRun: false,
+  };
 
   gridState = () => {
     for (let i=0; i<300; i+=20){
@@ -21,6 +23,10 @@ handleClick = (e) => {
       e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
       squareSize,
       squareSize);
+      // console.log(`${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`);
+      let tempCoord = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
+      // console.log(this.state[`${tempCoord}`]);
+      this.setState({[`${tempCoord}`]: "living"});
 }
 
 handleDoubleClick = (e) => {
@@ -33,10 +39,6 @@ handleDoubleClick = (e) => {
       e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
       squareSize,
       squareSize);
-      // console.log(`${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`);
-      let tempCoord = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
-      // console.log(this.state[`${tempCoord}`]);
-      this.setState({[`${tempCoord}`]: "living"});
     }
 
 
