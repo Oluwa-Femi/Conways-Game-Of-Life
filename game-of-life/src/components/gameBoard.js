@@ -6,7 +6,7 @@ class Board extends Component {
   gridState = () => {
     for (let i=0; i<300; i+=20){
         for (let j=0; j<300; j+=20){
-        this.setState({[`${i/20},${j/20}`]: "vollaa"})
+        this.setState({[`${i/20},${j/20}`]: "kpai"})
         }
     }
 }
@@ -33,7 +33,11 @@ handleDoubleClick = (e) => {
       e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
       squareSize,
       squareSize);
-}
+      // console.log(`${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`);
+      let tempCoord = `${(e.clientX - pos.x - (e.clientX - pos.x) % squareSize)/20},${ (e.clientY - pos.y - (e.clientY - pos.y) % squareSize)/20}`;
+      // console.log(this.state[`${tempCoord}`]);
+      this.setState({[`${tempCoord}`]: "living"});
+    }
 
 
   componentDidMount() {
