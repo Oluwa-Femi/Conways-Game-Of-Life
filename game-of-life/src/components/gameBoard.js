@@ -59,6 +59,15 @@ class Board extends Component {
     this.setState({ gameRun: !this.state.gameRun });
   };
 
+  clearCanvas = (e) => {
+    this.setState({gameRun: false});
+    const canvas = this.refs.canvas;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    this.initCanvas();
+    this.gridState();
+}
+
     initCanvas = () => {
       const canvas = this.refs.canvas;
       const ctx = canvas.getContext("2d");
@@ -93,6 +102,9 @@ class Board extends Component {
         <div className="controls">
           <button onClick={this.gameToggle}>
             Start / Stop simulation
+          </button>
+          <button onClick={this.clearCanvas}>
+            Clear
           </button>
         </div>
       </div>
