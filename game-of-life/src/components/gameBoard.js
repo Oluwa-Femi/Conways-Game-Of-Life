@@ -38,41 +38,49 @@ class Board extends Component {
   };
 
   handleDoubleClick = (e) => {
-    const canvo = this.refs.canvas;
-    const ctx = canvo.getContext("2d");
-    const pos = canvo.getBoundingClientRect();
-    const squareSize = 20;
-    ctx.fillStyle = "white";
-    ctx.fillRect(
-      e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
-      e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
-      squareSize,
-      squareSize
-    );
+    if (this.state.simRun === false) {
+      const canvo = this.refs.canvas;
+      const ctx = canvo.getContext("2d");
+      const pos = canvo.getBoundingClientRect();
+      const squareSize = 20;
+      ctx.fillStyle = "white";
+      ctx.fillRect(
+        e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
+        e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
+        squareSize,
+        squareSize
+      );
+      } else {
+        console.log("Grid is not active while game is running");
+      }
   };
 
   gameToggle = (e) => {
     this.setState({ gameRun: !this.state.gameRun });
   };
 
-  componentDidMount() {
-    this.gridState();
-    const canvas = this.refs.canvas;
-    const ctx = canvas.getContext("2d");
-    ctx.canvas.width = 500;
-    ctx.canvas.height = 500;
-    ctx.strokeStyle = "rgba(0,0,255)";
-    for (let x = 0; x <= 500; x += 20) {
-      for (let y = 0; y <= 500; y += 20) {
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, 500);
-        ctx.stroke();
-        ctx.moveTo(0, y);
-        ctx.lineTo(500, y);
-        ctx.stroke();
+    initCanvas = () => {
+      const canvas = this.refs.canvas;
+      const ctx = canvas.getContext("2d");
+      ctx.canvas.width = 500;
+      ctx.canvas.height = 500;
+      ctx.strokeStyle = "rgba(0,0,255)";
+      for (let x = 0; x <= 500; x += 20) {
+        for (let y = 0; y <= 500; y += 20) {
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, 500);
+          ctx.stroke();
+          ctx.moveTo(0, y);
+          ctx.lineTo(500, y);
+          ctx.stroke();
+        }
       }
     }
-  }
+
+    componentDidMount() {
+      this.gridState();
+      this.initCanvas();
+    }
 
   render() {
     return (
