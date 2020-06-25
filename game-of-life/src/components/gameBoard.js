@@ -3,6 +3,7 @@ import React, { Component } from "react";
 class Board extends Component {
   state = {
     gameRun: false,
+    cycleCount: 0,
   };
 
   gridState = () => {
