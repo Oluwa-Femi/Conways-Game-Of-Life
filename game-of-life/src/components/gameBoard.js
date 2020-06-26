@@ -21,7 +21,7 @@ class Board extends Component {
       const ctx = canvo.getContext("2d");
       const pos = canvo.getBoundingClientRect();
       const squareSize = 20;
-      ctx.fillStyle = "#F39C12";
+      ctx.fillStyle = "red";
       ctx.fillRect(
         e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
         e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
@@ -76,7 +76,7 @@ class Board extends Component {
     ctx.canvas.width = 500;
     ctx.canvas.height = 500;
     ctx.strokeStyle = "rgba(444, 444, 444, 0.8)";
-    ctx.fillStyle = "#041180";
+    ctx.fillStyle = "#89cff0";
     ctx.fillRect(0, 0, 500, 500);
     for (let x = 0; x <= 500; x += 20) {
       for (let y = 0; y <= 500; y += 20) {
@@ -101,7 +101,7 @@ class Board extends Component {
         ctx.strokeStyle = "rgba(444, 444, 444, 0.8)";
         ctx.strokeRect(xVal * 20, yVal * 20, squareSize, squareSize);
       } else if (this.state[item] === "living") {
-        ctx.fillStyle = "#F39C12";
+        ctx.fillStyle = "red";
         ctx.fillRect(xVal * 20, yVal * 20, squareSize, squareSize);
       }
     }
@@ -349,6 +349,7 @@ class Board extends Component {
             </div>
           </div>
           <div className="rules">
+            <h3>RULES</h3>
             <p>
               1. Any live cell with fewer than two live neighbors dies, as if by
               underpopulation.
@@ -364,16 +365,6 @@ class Board extends Component {
             <p>
               4. Any dead cell with exactly three live neighbors becomes a live
               cell, as if by reproduction.
-            </p>
-            <h3>History</h3>
-            <p>
-              The game made its first public appearance in a 1970 issue of
-              Scientific American. Since then, it has attracted plenty of
-              interest due in part because of the vast ways the patterns can
-              evolve. The game has been used by scientists to illustrate the
-              possible evolution of complex contructs. The game's "popularity"
-              was bolstered by its appearance just as computer access became
-              more prevalent and affordable.
             </p>
           </div>
         </div>
