@@ -178,11 +178,11 @@ class Board extends Component {
     }
   };
 
-  runSimulation = () => {
+  gameSimulation = () => {
     this.setState({ gameRun: true });
     this.gameCycle();
     this.handleTimer = window.setTimeout(() => {
-      this.runSimulation();
+      this.gameSimulation();
     }, this.state.runSpeed);
   };
 
@@ -304,41 +304,74 @@ class Board extends Component {
   render() {
     return (
       <div className="cgof">
-        <canvas
-          ref="canvas"
-          onClick={this.handleClick}
-          onDoubleClick={this.handleDoubleClick}
-        />
-        <p>Generation: {this.state.cycleCount}</p>
-        <div className="controls">
-          <button onClick={this.runSimulation}>Start</button>
-          <button onClick={this.pauseGame}>Stop </button>
-          <button onClick={this.clearCanvas}>Clear</button>
-          <button onClick={this.stepOnce}>Step</button>
-        </div>
-        <p>Sample Configurations</p>
-        <div>
-          <button onClick={this.pulsar}>Pulsar</button>
-          <button onClick={this.toad}>Toad</button>
-          <button onClick={this.beacon}>Beacon</button>
-        </div>
-        <div>
-          <input
-            type="radio"
-            id="slow"
-            name="speed"
-            value="slow"
-            onClick={this.slow}
-          />
-          <label>slow</label>
-          <input
-            type="radio"
-            id="fast"
-            name="speed"
-            value="fast"
-            onClick={this.fast}
-          />
-          <label>fast</label>
+        <h2>Conway's Game of Life</h2>
+        <div className="top-contain">
+          <div className="canvas">
+            <p>Generation: {this.state.cycleCount}</p>
+            <canvas
+              ref="canvas"
+              onClick={this.handleClick}
+              onDoubleClick={this.handleDoubleClick}
+            />
+            <div className="controls">
+              <button onClick={this.gameSimulation}>Start Simulation</button>
+              <button onClick={this.pauseGame}>Stop </button>
+              <button onClick={this.clearCanvas}>Clear Board</button>
+              <button onClick={this.stepOnce}>Step</button>
+            </div>
+            <p>Sample Configurations</p>
+            <div>
+              <button onClick={this.pulsar}>Pulsar</button>
+              <button onClick={this.toad}>Toad</button>
+              <button onClick={this.beacon}>Beacon</button>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="slow"
+                name="speed"
+                value="slow"
+                onClick={this.slow}
+              />
+              <label>slow</label>
+              <input
+                type="radio"
+                id="fast"
+                name="speed"
+                value="fast"
+                onClick={this.fast}
+              />
+              <label>fast</label>
+            </div>
+          </div>
+          <div className="rules">
+            <p>
+              1. Any live cell with fewer than two live neighbors dies, as if by
+              underpopulation.
+            </p>
+            <p>
+              2. Any live cell with two or three live neighbors lives on to the
+              next generation.
+            </p>
+            <p>
+              3. Any live cell with more than three live neighbors dies, as if
+              by overpopulation.
+            </p>
+            <p>
+              4. Any dead cell with exactly three live neighbors becomes a live
+              cell, as if by reproduction.
+            </p>
+            <h3>History</h3>
+            <p>
+              The game made its first public appearance in a 1970 issue of
+              Scientific American. Since then, it has attracted plenty of
+              interest due in part because of the vast ways the patterns can
+              evolve. The game has been used by scientists to illustrate the
+              possible evolution of complex contructs. The game's "popularity"
+              was bolstered by its appearance just as computer access became
+              more prevalent and affordable.
+            </p>
+          </div>
         </div>
       </div>
     );
