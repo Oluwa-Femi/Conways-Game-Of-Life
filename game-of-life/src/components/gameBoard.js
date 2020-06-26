@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Board extends Component {
   state = {
-    gameRun: false,
+    gameRun: true,
     cycleCount: 0,
     runSpeed: 1000,
   };
@@ -204,6 +204,71 @@ class Board extends Component {
     this.setState({ runSpeed: 400 });
   };
 
+  pulsar = () => {
+    this.setState({
+      "0,10": "living",
+      "0,4": "living",
+      "1,10": "living",
+      "1,4": "living",
+      "10,0": "living",
+      "10,1": "living",
+      "10,12": "living",
+      "10,13": "living",
+      "10,14": "living",
+      "10,2": "living",
+      "10,5": "living",
+      "10,6": "living",
+      "10,8": "living",
+      "10,9": "living",
+      "12,10": "living",
+      "12,4": "living",
+      "12,5": "living",
+      "12,9": "living",
+      "13,10": "living",
+      "13,4": "living",
+      "14,10": "living",
+      "14,4": "living",
+      "2,10": "living",
+      "2,4": "living",
+      "2,5": "living",
+      "2,9": "living",
+      "4,0": "living",
+      "4,1": "living",
+      "4,12": "living",
+      "4,13": "living",
+      "4,14": "living",
+      "4,2": "living",
+      "4,5": "living",
+      "4,6": "living",
+      "4,8": "living",
+      "4,9": "living",
+      "5,10": "living",
+      "5,12": "living",
+      "5,2": "living",
+      "5,4": "living",
+      "5,6": "living",
+      "5,8": "living",
+      "6,10": "living",
+      "6,4": "living",
+      "6,5": "living",
+      "6,9": "living",
+      "8,10": "living",
+      "8,4": "living",
+      "8,5": "living",
+      "8,9": "living",
+      "9,10": "living",
+      "9,12": "living",
+      "9,2": "living",
+      "9,4": "living",
+      "9,6": "living",
+      "9,8": "living",
+    });
+    this.updateCanvas();
+    this.timer = window.setTimeout(() => {
+      this.updateCanvas();
+    }, this.state.runSpeed);
+  };
+
   render() {
     return (
       <div className="cgof">
@@ -218,7 +283,7 @@ class Board extends Component {
           <button onClick={this.pauseGame}>Stop </button>
           <button onClick={this.clearCanvas}>Clear</button>
           <button onClick={this.stepOnce}>Step</button>
-          <button onClick={this.gameToggle}>?</button>
+          <button onClick={this.pulsar}>Animate</button>
         </div>
         <div>
           <input
