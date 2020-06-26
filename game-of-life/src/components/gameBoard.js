@@ -8,9 +8,9 @@ class Board extends Component {
   };
 
   gridState = () => {
-    for (let i = 0; i < 300; i += 20) {
-      for (let j = 0; j < 300; j += 20) {
-        this.setState({ [`${i / 20},${j / 20}`]: "kpai" });
+    for (let i = 0; i < 500; i += 20) {
+      for (let j = 0; j < 500; j += 20) {
+        this.setState({ [`${i / 20},${j / 20}`]: "deadite" });
       }
     }
   };
@@ -21,7 +21,7 @@ class Board extends Component {
       const ctx = canvo.getContext("2d");
       const pos = canvo.getBoundingClientRect();
       const squareSize = 20;
-      ctx.fillStyle = "grey";
+      ctx.fillStyle = "#F39C12";
       ctx.fillRect(
         e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
         e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
@@ -47,17 +47,16 @@ class Board extends Component {
       let yStart = e.clientY - pos.y - ((e.clientY - pos.y) % squareSize);
       ctx.clearRect(xStart, yStart, squareSize, squareSize);
       ctx.strokeRect(xStart, yStart, squareSize, squareSize);
-      ctx.strokeStyle = "rgba(111, 111, 111, 0.8)";
       let tempCoord = `${
         (e.clientX - pos.x - ((e.clientX - pos.x) % squareSize)) / 20
       },${(e.clientY - pos.y - ((e.clientY - pos.y) % squareSize)) / 20}`;
-      this.setState({ [`${tempCoord}`]: "kpai" });
+      this.setState({ [`${tempCoord}`]: "deadite" });
     } else {
       console.log("Grid is not active while game is running");
     }
   };
 
-  gameToggle = (e) => {
+  gameToggle = e => {
     this.setState({ gameRun: !this.state.gameRun });
   };
 
@@ -76,7 +75,9 @@ class Board extends Component {
     const ctx = canvas.getContext("2d");
     ctx.canvas.width = 500;
     ctx.canvas.height = 500;
-    ctx.strokeStyle = "rgba(0,0,255)";
+    ctx.strokeStyle = "rgba(444, 444, 444, 0.8)";
+    ctx.fillStyle = "#041180";
+    ctx.fillRect(0, 0, 500, 500);
     for (let x = 0; x <= 500; x += 20) {
       for (let y = 0; y <= 500; y += 20) {
         ctx.moveTo(x, 0);
@@ -92,34 +93,25 @@ class Board extends Component {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     const squareSize = 20;
-    ctx.moveTo(0, 0);
-    ctx.lineTo(300, 0);
-    ctx.lineTo(300, 300);
-    ctx.lineTo(0, 300);
-    ctx.lineTo(0, 0);
-    ctx.stroke();
-    console.log(
-      `ctx.height is ${ctx.canvas.height}, width is ${ctx.canvas.width}`
-    );
     for (let item in this.state) {
       let xVal = parseInt(item.substring(0, item.indexOf(",")));
       let yVal = parseInt(item.substring(item.indexOf(",") + 1));
-      if (this.state[item] === "kpai") {
+      if (this.state[item] === "deadite") {
+        ctx.clearRect(xVal * 20, yVal * 20, squareSize, squareSize);
+        ctx.strokeStyle = "rgba(444, 444, 444, 0.8)";
         ctx.strokeRect(xVal * 20, yVal * 20, squareSize, squareSize);
       } else if (this.state[item] === "living") {
+        ctx.fillStyle = "#F39C12";
         ctx.fillRect(xVal * 20, yVal * 20, squareSize, squareSize);
       }
     }
-    console.log(``);
   };
 
   gameCycle = () => {
-    const canvas = this.refs.canvas;
-    const ctx = canvas.getContext("2d");
     if (this.state.gameRun) {
       let stateBuffer = { ...this.state };
-      for (let x = 0; x <= 300; x += 20) {
-        for (let y = 0; y <= 300; y += 20) {
+      for (let x = 0; x <= 500; x += 20) {
+        for (let y = 0; y <= 500; y += 20) {
           let LNC = 0;
           let topLeftN = `${x / 20 - 1},${y / 20 - 1}`;
           let topN = `${x / 20},${y / 20 - 1}`;
@@ -155,10 +147,10 @@ class Board extends Component {
           }
           let tempCell = `${x / 20},${y / 20}`;
           if (this.state[tempCell] === "living" && LNC > 3) {
-            stateBuffer[tempCell] = "kpai";
+            stateBuffer[tempCell] = "deadite";
           } else if (this.state[tempCell] === "living" && LNC < 2) {
-            stateBuffer[tempCell] = "kpai";
-          } else if (this.state[tempCell] === "kpai" && LNC === 3) {
+            stateBuffer[tempCell] = "deadite";
+          } else if (this.state[tempCell] === "deadite" && LNC === 3) {
             stateBuffer[tempCell] = "living";
           }
         }
@@ -196,7 +188,7 @@ class Board extends Component {
     this.setState({ gameRun: true });
     this.timer = window.setTimeout(() => {
       this.gameCycle();
-    }, 200);
+    }, 250);
   };
 
   componentDidMount() {
@@ -209,7 +201,7 @@ class Board extends Component {
   };
 
   fast = () => {
-    this.setState({ runSpeed: 300 });
+    this.setState({ runSpeed: 375 });
   };
 
   pulsar = () => {
@@ -318,21 +310,22 @@ class Board extends Component {
           <div className="canvas">
             <p>Generation: {this.state.cycleCount}</p>
             <canvas
+              className="canvas-grid"
               ref="canvas"
               onClick={this.handleClick}
               onDoubleClick={this.handleDoubleClick}
             />
             <div className="controls">
-              <button onClick={this.gameSimulation}>Start Simulation</button>
-              <button onClick={this.pauseGame}>Stop </button>
-              <button onClick={this.clearCanvas}>Clear Board</button>
-              <button onClick={this.stepOnce}>Step</button>
+              <button className="button" onClick={this.gameSimulation}>Start</button>
+              <button className="button" onClick={this.pauseGame}>Stop </button>
+              <button className="button" onClick={this.clearCanvas}>Clear Board</button>
+              <button className="button" onClick={this.stepOnce}>Next</button>
             </div>
             <p>Sample Configurations</p>
             <div>
-              <button onClick={this.pulsar}>Pulsar</button>
-              <button onClick={this.toad}>Toad</button>
-              <button onClick={this.beacon}>Beacon</button>
+              <button className="button" onClick={this.pulsar}>Pulsar</button>
+              <button className="button" onClick={this.toad}>Toad</button>
+              <button className="button" onClick={this.beacon}>Beacon</button>
             </div>
             <div>
               <input
@@ -341,6 +334,7 @@ class Board extends Component {
                 name="speed"
                 value="slow"
                 onClick={this.slow}
+                className="radio"
               />
               <label>slow</label>
               <input
@@ -349,6 +343,7 @@ class Board extends Component {
                 name="speed"
                 value="fast"
                 onClick={this.fast}
+                className="radio"
               />
               <label>fast</label>
             </div>
