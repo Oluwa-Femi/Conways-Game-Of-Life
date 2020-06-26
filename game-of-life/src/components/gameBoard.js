@@ -16,12 +16,12 @@ class Board extends Component {
   };
 
   handleClick = (e) => {
-    if (this.state.gameRun === false) {
+    if (!this.handleTimer) {
       const canvo = this.refs.canvas;
       const ctx = canvo.getContext("2d");
       const pos = canvo.getBoundingClientRect();
       const squareSize = 20;
-      ctx.fillStyle = "red";
+      ctx.fillStyle = "grey";
       ctx.fillRect(
         e.clientX - pos.x - ((e.clientX - pos.x) % squareSize),
         e.clientY - pos.y - ((e.clientY - pos.y) % squareSize),
@@ -167,6 +167,12 @@ class Board extends Component {
       cycleCountTemp++;
       this.setState({ ...stateBuffer, cycleCount: cycleCountTemp });
       this.updateCanvas();
+      
+      if (Object.values(this.state).every(entry => entry !== "living")) {
+        this.timer = window.setTimeout(() => {
+          this.pauseGame();
+        });
+      }
     }
   };
 
@@ -207,6 +213,7 @@ class Board extends Component {
   };
 
   pulsar = () => {
+    this.clearCanvas();
     this.setState({
       "0,10": "living",
       "0,4": "living",
@@ -272,6 +279,7 @@ class Board extends Component {
   };
 
   toad = () => {
+    this.clearCanvas();
     this.setState({
       "5,6": "living",
       "6,6": "living",
@@ -287,6 +295,7 @@ class Board extends Component {
   };
 
   beacon = () => {
+    this.clearCanvas();
     this.setState({
       "5,4": "living",
       "6,4": "living",
