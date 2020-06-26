@@ -4,7 +4,7 @@ class Board extends Component {
   state = {
     gameRun: true,
     cycleCount: 0,
-    runSpeed: 1000,
+    runSpeed: 800,
   };
 
   gridState = () => {
@@ -188,7 +188,9 @@ class Board extends Component {
 
   stepOnce = () => {
     this.setState({ gameRun: true });
-    this.gameCycle();
+    this.timer = window.setTimeout(() => {
+      this.gameCycle();
+    }, 200);
   };
 
   componentDidMount() {
@@ -197,11 +199,11 @@ class Board extends Component {
   }
 
   slow = () => {
-    this.setState({ runSpeed: 1200 });
+    this.setState({ runSpeed: 1100 });
   };
 
   fast = () => {
-    this.setState({ runSpeed: 400 });
+    this.setState({ runSpeed: 300 });
   };
 
   pulsar = () => {
@@ -266,7 +268,37 @@ class Board extends Component {
     this.updateCanvas();
     this.timer = window.setTimeout(() => {
       this.updateCanvas();
-    }, this.state.runSpeed);
+    }, 500);
+  };
+
+  toad = () => {
+    this.setState({
+      "5,6": "living",
+      "6,6": "living",
+      "7,6": "living",
+      "6,5": "living",
+      "7,5": "living",
+      "8,5": "living",
+    });
+    this.updateCanvas();
+    this.timer = window.setTimeout(() => {
+      this.updateCanvas();
+    });
+  };
+
+  beacon = () => {
+    this.setState({
+      "5,4": "living",
+      "6,4": "living",
+      "5,5": "living",
+      "8,6": "living",
+      "7,7": "living",
+      "8,7": "living",
+    });
+    this.updateCanvas();
+    this.timer = window.setTimeout(() => {
+      this.updateCanvas();
+    });
   };
 
   render() {
@@ -283,7 +315,12 @@ class Board extends Component {
           <button onClick={this.pauseGame}>Stop </button>
           <button onClick={this.clearCanvas}>Clear</button>
           <button onClick={this.stepOnce}>Step</button>
-          <button onClick={this.pulsar}>Animate</button>
+        </div>
+        <p>Sample Configurations</p>
+        <div>
+          <button onClick={this.pulsar}>Pulsar</button>
+          <button onClick={this.toad}>Toad</button>
+          <button onClick={this.beacon}>Beacon</button>
         </div>
         <div>
           <input
