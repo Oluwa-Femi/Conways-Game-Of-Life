@@ -38,7 +38,7 @@ class Board extends Component {
   };
 
   handleDoubleClick = (e) => {
-    if (this.state.simRun === false) {
+    if (this.state.gameRun === false) {
       const canvo = this.refs.canvas;
       const ctx = canvo.getContext("2d");
       const pos = canvo.getBoundingClientRect();
@@ -158,7 +158,7 @@ class Board extends Component {
             stateBuffer[tempCell] = "kpai";
           } else if (this.state[tempCell] === "living" && LNC < 2) {
             stateBuffer[tempCell] = "kpai";
-          } else if (this.state[tempCell] === "deadite" && LNC === 3) {
+          } else if (this.state[tempCell] === "kpai" && LNC === 3) {
             stateBuffer[tempCell] = "living";
           }
         }
@@ -171,7 +171,7 @@ class Board extends Component {
   };
 
   pauseGame = () => {
-    this.setState({ simRun: false });
+    this.setState({ gameRun: false });
     if (this.handleTimer) {
       window.clearTimeout(this.handleTimer);
       this.handleTimer = null;
@@ -179,7 +179,7 @@ class Board extends Component {
   };
 
   runSimulation = () => {
-    this.setState({ simRun: true });
+    this.setState({ gameRun: true });
     this.gameCycle();
     this.handleTimer = window.setTimeout(() => {
       this.runSimulation();
@@ -187,7 +187,7 @@ class Board extends Component {
   };
 
   stepOnce = () => {
-    this.setState({ simRun: true });
+    this.setState({ gameRun: true });
     this.gameCycle();
   };
 
@@ -218,7 +218,7 @@ class Board extends Component {
           <button onClick={this.pauseGame}>Stop </button>
           <button onClick={this.clearCanvas}>Clear</button>
           <button onClick={this.stepOnce}>Step</button>
-          <button onClick={this.simulationToggle}>?</button>
+          <button onClick={this.gameToggle}>?</button>
         </div>
         <div>
           <input
