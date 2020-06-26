@@ -30,10 +30,7 @@ class Board extends Component {
       let tempX = (e.clientX - pos.x - ((e.clientX - pos.x) % squareSize)) / 20;
       let tempY = (e.clientY - pos.y - ((e.clientY - pos.y) % squareSize)) / 20;
       let selectedCell = `${tempX},${tempY}`;
-      // console.log(this.state[`${tempCoord}`]);
       this.setState({ [`${selectedCell}`]: "living" });
-      // console.log(`topLeftN = ${tempX - 1},${tempY - 1}`);
-      // console.log(`botRightN = ${tempX + 1},${tempY + 1}`);
     } else {
       console.log("Grid is not active while game is running");
     }
@@ -93,10 +90,8 @@ class Board extends Component {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     const squareSize = 20;
-    // ctx.strokeRect(0,0,ctx.width,ctx.height);
     ctx.moveTo(0, 0);
     ctx.lineTo(300, 0);
-    // ctx.stroke();
     ctx.lineTo(300, 300);
     ctx.lineTo(0, 300);
     ctx.lineTo(0, 0);
@@ -107,10 +102,7 @@ class Board extends Component {
     for (let item in this.state) {
       let xVal = parseInt(item.substring(0, item.indexOf(",")));
       let yVal = parseInt(item.substring(item.indexOf(",") + 1));
-      // console.log(`${item},${xVal+1},${yVal}`);
-      // ctx.strokeRect(xVal*20, yVal*20, squareSize, squareSize);
       if (this.state[item] === "kpai") {
-        // ctx.clearRect(xVal * 20, yVal * 20, squareSize, squareSize);
         ctx.strokeRect(xVal * 20, yVal * 20, squareSize, squareSize);
       } else if (this.state[item] === "living") {
         ctx.fillRect(xVal * 20, yVal * 20, squareSize, squareSize);
@@ -159,47 +151,13 @@ class Board extends Component {
           if (this.state[botRightN] === "living") {
             ++LNC;
           }
-          // if (
-          //   this.state[`${x / 20},${y / 20}`] === "living" &&
-          //   (LNC !== 2 || 3)
-          // ) {
-          //   console.log(`Welcome to the deads ${x / 20},${y / 20}`);
           let tempCell = `${x / 20},${y / 20}`;
-          if (this.state[`${x / 20},${y / 20}`] === "living") {
-            // let tempCell = `${x/20},${y/20}`;
-            console.log(
-              `cell is ${x / 20},${y / 20} LNC is ${LNC}, state is ${
-                this.state[tempCell]
-              }`
-            );
-          }
-          if (this.state[`${x / 20},${y / 20}`] === "living" && LNC > 3) {
-            console.log(
-              `Welcome to the deads ${x / 20},${
-                y / 20
-              } LNC is ${LNC}, state is ${this.state[tempCell]}`
-            );
-            stateBuffer[`${x / 20},${y / 20}`] = "kpai";
-          } else if (
-            this.state[`${x / 20},${y / 20}`] === "living" &&
-            LNC < 2
-          ) {
-            console.log(
-              `Welcome to the deads ${x / 20},${
-                y / 20
-              } LNC is ${LNC}, state is ${this.state[tempCell]}`
-            );
-            stateBuffer[`${x / 20},${y / 20}`] = "kpai";
-            // } else if (
-            //   this.state[`${x / 20},${y / 20}`] === "kpai" &&
-            //   LNC === 3
-            // ) {
-          } else if (
-            this.state[`${x / 20},${y / 20}`] === "kpai" &&
-            LNC === 3
-          ) {
-            console.log(`Welcome to the living ${x / 20},${y / 20}`);
-            stateBuffer[`${x / 20},${y / 20}`] = "living";
+          if (this.state[tempCell] === "living" && LNC > 3) {
+            stateBuffer[tempCell] = "kpai";
+          } else if (this.state[tempCell] === "living" && LNC < 2) {
+            stateBuffer[tempCell] = "kpai";
+          } else if (this.state[tempCell] === "deadite" && LNC === 3) {
+            stateBuffer[tempCell] = "living";
           }
         }
       }
