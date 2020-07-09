@@ -15,6 +15,9 @@ class Board extends Component {
     }
   };
 
+  // retrieveS click position, then convert it to relative position, and calculate
+  //the cols and rows of the cell being clicked. Then the cell state is reverted.
+  //updating canvas api and rendering
   handleClick = (e) => {
     if (!this.handleTimer) {
       const canvo = this.refs.canvas;
@@ -308,7 +311,7 @@ class Board extends Component {
         <h2>Conway's Game of Life</h2>
         <div className="top-contain">
           <div className="canvas">
-            <p>Generation: {this.state.cycleCount}</p>
+            <h3>Generation: {this.state.cycleCount}</h3>
             <canvas
               className="canvas-grid"
               ref="canvas"
@@ -321,7 +324,7 @@ class Board extends Component {
               <button className="button" onClick={this.clearCanvas}>Clear Board</button>
               <button className="button" onClick={this.stepOnce}>Next</button>
             </div>
-            <p>Sample Configurations</p>
+            <h3>OSCILLATORS</h3>
             <div>
               <button className="button" onClick={this.pulsar}>Pulsar</button>
               <button className="button" onClick={this.toad}>Toad</button>
